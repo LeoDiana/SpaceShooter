@@ -8,5 +8,6 @@
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 641.447, 630.756 )
 
 [node name="AsteroidSpawner" parent="." instance=ExtResource( 1 )]

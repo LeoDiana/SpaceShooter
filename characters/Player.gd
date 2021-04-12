@@ -9,10 +9,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = -SPEED
 	if (Input.is_action_pressed("ui_right")):
 		velocity.x = SPEED
-	if (Input.is_action_pressed("ui_up")):
-		velocity.y = -SPEED
-	if (Input.is_action_pressed("ui_down")):
-		velocity.y = SPEED
 	
 	move_and_collide(velocity * delta)
 		
@@ -20,3 +16,8 @@ func _unhandled_key_input(event):
 	if (event.is_action_pressed("shoot")):
 		$LaserWeapon.shoot()
 		
+
+
+func _on_Hitbox_body_entered(body):
+	if (!self.is_queued_for_deletion() && body.is_in_group("asteroids")):
+		queue_free()

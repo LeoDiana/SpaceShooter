@@ -6,6 +6,7 @@
 [ext_resource path="res://objects/LaserWeapon.tscn" type="PackedScene" id=4]
 
 [node name="Player" type="KinematicBody2D"]
+scale = Vector2( 0.4, 0.4 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -17,3 +18,9 @@ polygon = PoolVector2Array( 0, -32, 40, 28, -40, 28 )
 [node name="Wraparound" parent="." instance=ExtResource( 3 )]
 
 [node name="LaserWeapon" parent="." instance=ExtResource( 4 )]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PoolVector2Array( 0, -32, 40, 28, -40, 28 )
+[connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
