@@ -1,16 +1,20 @@
 extends RigidBody2D
 
 signal explode
+signal score_changed
 
 var asteroid_small_scene := load("res://objects/AsteroidSmall.tscn")
 var explosion_particles_scene := load("res://objects/ParticlesAsteroidExplosion.tscn")
 var rng = RandomNumberGenerator.new()
 var is_exploded = false
+var score_value = 100
 
 
 func _ready():
 	var main_camera = get_node("/root/Game/MainCamera")
 	self.connect("explode", main_camera, "asteroid_exploded")
+	var label = get_tree().get_root().get_node("Game/GUI/MarginContainer/HBoxContainer/VBoxContainer/Score")
+	self.connect("score_changed", label, "update_score")
 
 func explode():
 	if (is_exploded):
@@ -22,6 +26,7 @@ func explode():
 	_play_explosion_sound()
 	
 	emit_signal("explode")
+	emit_signal("score_changed", score_value)
 	
 	_spawn_asteroid_smalls(4)
 	
