@@ -5,6 +5,7 @@ signal score_changed
 
 var asteroid_small_scene := load("res://objects/AsteroidSmall.tscn")
 var explosion_particles_scene := load("res://objects/ParticlesAsteroidExplosion.tscn")
+var points_scored_scene = load("res://ui/PointsScored.tscn")
 var rng = RandomNumberGenerator.new()
 var is_exploded = false
 var score_value = 100
@@ -27,11 +28,19 @@ func explode():
 	
 	emit_signal("explode")
 	emit_signal("score_changed", score_value)
+	_spawn_score()
 	
 	_spawn_asteroid_smalls(4)
 	
 	get_parent().remove_child(self)
 	queue_free()
+
+func _spawn_score():
+	var points_scored = points_scored_scene.instance()
+	points_scored.get_node("Label").text = str(score_value)
+	points_scored.position = self.position
+
+	get_parent().add_child(points_scored)
 
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
 	queue_free()
